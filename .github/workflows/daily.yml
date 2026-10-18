@@ -1,0 +1,66 @@
+name: Etsy POD Radar
+
+on:
+  schedule:
+    - cron: "17 4 * * *"   # dagelijks 04:17 UTC = 06:17 zomertijd / 05:17 wintertijd (NL)
+  workflow_dispatch: {}      # handmatig starten via tabblad Actions -> Run workflow
+
+permissions:
+  contents: write
+
+concurrency:
+  group: etsy-pod-radar
+  cancel-in-progress: false
+
+jobs:
+  radar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Code ophalen
+        uses: actions/checkout@v4
+
+      - name: Python installeren
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Pakketten installeren
+        run: pip install -r requirements.txt
+
+      - name: Data-branch ophalen
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REMOTE="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git ls-remote --exit-code --heads "$REMOTE" data >/dev/null 2>&1; then
+            git clone --quiet --depth 1 --branch data "$REMOTE" out
+          else
+            mkdir -p out
+            echo "Eerste run: nieuwe data-branch"
+          fi
+
+      - name: Radar draaien
+        env:
+          ETSY_API_KEY: ${{ secrets.ETSY_API_KEY }}
+          ETSY_SHARED_SECRET: ${{ secrets.ETSY_SHARED_SECRET }}
+        run: python -m radar.main --data-dir out --config config.yaml
+
+      - name: Resultaat publiceren op data-branch
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd out
+          if [ ! -f db/radar.sqlite.gz ]; then echo "Geen data om te publiceren"; exit 0; fi
+          # één commit zonder geschiedenis houdt de repo klein; de historie zit in de database zelf
+          rm -rf .git
+          git init --quiet -b data
+          git config user.name "pod-radar-bot"
+          git config user.email "pod-radar-bot@users.noreply.github.com"
+          git add -A
+          git commit --quiet -m "Radar $(date -u +%F)"
+          git push --quiet --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" data
+          echo "### Etsy POD Radar $(date -u +%F)" >> "$GITHUB_STEP_SUMMARY"
+          head -n 30 reports/latest.md >> "$GITHUB_STEP_SUMMARY" || true
