@@ -1,0 +1,231 @@
+# Etsy POD Radar — instellingen
+# Je kunt dit bestand op GitHub aanpassen (potloodje rechtsboven). Wijzigingen gelden vanaf de volgende run.
+
+# ---------------------------------------------------------------
+# 1. Zoekwoorden waarmee de bot POD-shops ontdekt (Engelstalig: Etsy US is de grootste markt)
+#    Elke dag worden alle zoekwoorden doorzocht; de best scorende listings en hun shops worden gevolgd.
+# ---------------------------------------------------------------
+seed_keywords:
+  # Kleding
+  - funny shirt
+  - graphic tee
+  - comfort colors shirt
+  - trendy sweatshirt
+  - oversized hoodie
+  - teacher shirt
+  - nurse shirt
+  - mama sweatshirt
+  - dad shirt
+  - retro shirt
+  - bookish sweatshirt
+  - dog mom shirt
+  - cat lover shirt
+  - birthday shirt
+  - bachelorette shirts
+  - family matching shirts
+  - custom shirt
+  - western graphic tee
+  - vintage style tee
+  - baby onesie funny
+  - kids shirt
+  - embroidered sweatshirt
+  # Drinkware
+  - funny mug
+  - custom mug
+  - coffee mug gift
+  - tumbler 20oz
+  - camp mug
+  # Wall art / home
+  - poster print
+  - minimalist wall art
+  - canvas wall art
+  - custom map poster
+  - custom pillow
+  - custom blanket
+  - doormat
+  # Accessoires
+  - tote bag
+  - sticker
+  - phone case
+  - trucker hat
+  - christmas ornament personalized
+
+# Seizoenszoekwoorden worden automatisch toegevoegd op basis van de maand (1 = januari).
+seasonal_keywords:
+  1: [valentines shirt, galentines sweatshirt, new year shirt]
+  2: [valentines shirt, st patricks shirt, galentines sweatshirt]
+  3: [st patricks shirt, easter shirt, spring sweatshirt]
+  4: [easter shirt, mothers day gift, earth day shirt]
+  5: [mothers day gift, graduation shirt, summer shirt]
+  6: [fathers day shirt, 4th of july shirt, summer vacation shirt]
+  7: [4th of july shirt, back to school shirt, summer shirt]
+  8: [back to school shirt, teacher shirt, fall sweatshirt]
+  9: [fall sweatshirt, halloween shirt, pumpkin sweatshirt]
+  10: [halloween shirt, spooky season sweatshirt, thanksgiving shirt, fall sweatshirt]
+  11: [thanksgiving shirt, christmas sweatshirt, christmas mug, christmas family shirts]
+  12: [christmas sweatshirt, christmas family shirts, new year shirt, christmas mug]
+
+# ---------------------------------------------------------------
+# 2. Shops die je altijd wilt volgen (exacte Etsy-shopnaam, zoals in de URL etsy.com/shop/<NAAM>)
+# ---------------------------------------------------------------
+extra_shops: []
+
+# ---------------------------------------------------------------
+# 3. Limieten (houden de bot binnen Etsy's API-quotum)
+# ---------------------------------------------------------------
+limits:
+  search_pages_per_keyword: 1      # 1 pagina = 100 listings
+  max_tracked_shops: 80            # maximaal aantal gevolgde shops
+  new_shops_per_day: 15            # maximaal aantal nieuwe shops dat per dag beoordeeld wordt
+  min_shop_sales: 500              # shop moet minstens zoveel verkopen hebben om gevolgd te worden
+  min_pod_share: 0.5               # minimaal aandeel POD-listings in een shop (0-1)
+  shop_new_listings: 100           # nieuwste listings per shop per dag
+  max_tracked_listings: 8000       # maximaal aantal listings dat dagelijks ververst wordt
+  reviews_pages_first_run: 3       # extra reviewhistorie bij de eerste meting van een shop
+  thumbnails: 30                   # aantal thumbnails van toppers voor de beeldanalyse
+  requests_per_second: 4
+  min_daily_quota_reserve: 300     # stop met optionele calls als Etsy minder dan dit aantal calls over heeft
+
+# ---------------------------------------------------------------
+# 4. Bewaartermijnen (dagen)
+# ---------------------------------------------------------------
+retention_days:
+  listing_snapshots: 120
+  search_ranks: 60
+  reviews: 400
+
+# ---------------------------------------------------------------
+# 5. Wisselkoersen naar USD (benadering, voor prijsvergelijking)
+# ---------------------------------------------------------------
+fx_to_usd:
+  USD: 1.0
+  EUR: 1.08
+  GBP: 1.27
+  CAD: 0.73
+  AUD: 0.66
+  NZD: 0.60
+  CHF: 1.13
+  SEK: 0.095
+  DKK: 0.145
+  NOK: 0.093
+  PLN: 0.25
+  ILS: 0.27
+  INR: 0.012
+  TRY: 0.029
+  MXN: 0.055
+  JPY: 0.0067
+  HKD: 0.128
+  SGD: 0.74
+
+# ---------------------------------------------------------------
+# 6. Merk-/IP-risico: listings met deze woorden worden NIET als design-voorbeeld gebruikt.
+#    (Ze tellen wel mee in de statistieken.) Vul gerust aan.
+# ---------------------------------------------------------------
+ip_blocklist:
+  - disney
+  - mickey
+  - minnie
+  - pixar
+  - marvel
+  - avengers
+  - spiderman
+  - spider-man
+  - star wars
+  - mandalorian
+  - grogu
+  - harry potter
+  - hogwarts
+  - pokemon
+  - pikachu
+  - nintendo
+  - mario
+  - zelda
+  - barbie
+  - taylor swift
+  - swiftie
+  - eras tour
+  - tswift
+  - travis kelce
+  - beyonce
+  - harry styles
+  - bad bunny
+  - morgan wallen
+  - zach bryan
+  - nfl
+  - nba
+  - mlb
+  - nhl
+  - ncaa
+  - super bowl
+  - stanley
+  - yeti
+  - nike
+  - adidas
+  - jordan
+  - coca cola
+  - starbucks
+  - dunkin
+  - hello kitty
+  - sanrio
+  - kuromi
+  - bluey
+  - lilo
+  - stitch
+  - grinch
+  - whoville
+  - snoopy
+  - peanuts
+  - charlie brown
+  - garfield
+  - sesame street
+  - looney tunes
+  - scooby
+  - simpsons
+  - friends tv
+  - central perk
+  - stranger things
+  - hawkins
+  - the office
+  - dunder mifflin
+  - schitt
+  - gilmore
+  - yellowstone
+  - dutton
+  - grey's anatomy
+  - jack skellington
+  - nightmare before christmas
+  - beetlejuice
+  - hocus pocus
+  - sanderson
+  - michael myers
+  - freddy krueger
+  - jason voorhees
+  - ghostface
+  - scream
+  - chucky
+  - pennywise
+  - labubu
+  - squishmallow
+  - lego
+  - minecraft
+  - fortnite
+  - roblox
+  - sonic
+  - care bears
+  - winnie the pooh
+  - toy story
+  - frozen
+  - elsa
+  - moana
+  - encanto
+  - wednesday addams
+  - addams family
+  - harley davidson
+  - john deere
+  - jeep
+  - ford
+  - chevy
+  - trump
+  - biden
+  - harris
+  - maga
