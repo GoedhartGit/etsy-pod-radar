@@ -45,7 +45,7 @@ POD_MARKERS = [
 STOPWORDS = set(
     """a an and are as at be but by for from has have i if in into is it its me my of on or our
     so than that the their them then there these they this to too was we were what when which who
-    with you your yours u ur her him his he she hers them""".split()
+    with you your yours u ur her him his he she hers them it's im i'm you're we're don't can't""".split()
 )
 
 # Words that describe the product/format, not the design theme.
@@ -59,7 +59,8 @@ PRODUCT_WORDS = set(
     gift gifts present presents idea ideas custom customized customizable personalized personalised
     personalization design designs graphic graphics trendy cute oversized size sizes plus coffee
     tshirt oz 11oz 15oz 20oz ceramic cotton soft vintage-wash garment dyed wash dtg sweatshirts
-    wall art decor framed frame unframed giclee hooded trucker""".split()
+    wall art decor framed frame unframed giclee hooded trucker fit slouchy relaxed loose
+    boxy cropped heavyweight lightweight premium quality""".split()
 )
 
 GENERIC_TERMS = {
